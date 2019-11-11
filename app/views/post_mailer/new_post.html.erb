@@ -1,0 +1,11 @@
+<p>A new post was created for <%= @user.email%> </p>
+
+<blockquote>
+<em>  <%= @post.body %> </em>
+</blockquote>
+
+<p>
+  To reply to this post, please respond to
+  <%= link_to "Post page", @post %>
+
+</p>

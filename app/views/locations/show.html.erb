@@ -1,0 +1,16 @@
+<!--<header><h1 class="display-4"><%#= @location.title %></h1></header>-->
+
+<p>Address: <%= @location.address %></p>
+<p>Coordinates: <%= @location.latitude %> <%= @location.longitude %></p>
+
+<%= form_with(model: @location, local: true) do |form| %>
+  <fieldset class="form-group">
+    <%= form.label :address, 'Address' %>
+    <%= form.text_field :address, class: "form-control" %>
+    <small class="text-muted">You can also enter IP. Your IP is <%= request.ip %></small>
+  </fieldset>
+
+<% end %>
+
+<%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@location.latitude},#{@location.longitude}&markers=#{@location.latitude},#{@location.longitude}&zoom=7&size=640x400&key=AIzaSyA4BHW3txEdqfxzdTlPwaHsYRSZbfeIcd8",
+              class: 'img-fluid img-rounded' %>

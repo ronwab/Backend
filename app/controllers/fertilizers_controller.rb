@@ -17,10 +17,9 @@ class FertilizersController < ApplicationController
   end
 
   def update
-    # binding.pry
+
     fertilizer.update(fertilizer_params)
-    # binding.pry
-    # respond_with fertilizer
+    # Look at show below
     show
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in show method  #{e.message}"

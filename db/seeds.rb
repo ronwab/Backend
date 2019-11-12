@@ -16,4 +16,10 @@ end
     spacing: Faker::Number.decimal(l_digits: 2),
     notes: Faker::TvShows::Simpsons.quote
   )
+
+  10.times do
+    Activity.create(
+      activity: Faker::Verb.simple_present
+    )
+  end
 end

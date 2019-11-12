@@ -24,7 +24,7 @@ gem 'devise'
 gem 'geocoder'
 gem 'gibbon'
 gem 'jbuilder', '~> 2.7'
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password

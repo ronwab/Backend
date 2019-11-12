@@ -10,9 +10,6 @@ class Garden < ApplicationRecord
 
   before_save :downcase_plant_name
   def downcase_plant_name
-
     self.plant_name = plant_name.downcase
   end
-
 end
-

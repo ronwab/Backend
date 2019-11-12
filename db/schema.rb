@@ -12,9 +12,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_191_106_214_557) do
+ActiveRecord::Schema.define(version: 20_191_112_092_417) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+
+  create_table 'activities', force: :cascade do |t|
+    t.string 'activity'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+  end
 
   create_table 'fertilizers', force: :cascade do |t|
     t.string 'fertilizer_name'

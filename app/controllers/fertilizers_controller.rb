@@ -17,7 +17,6 @@ class FertilizersController < ApplicationController
   end
 
   def update
-
     fertilizer.update(fertilizer_params)
     # Look at show below
     show

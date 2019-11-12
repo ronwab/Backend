@@ -11,9 +11,8 @@ RSpec.describe GardenActivity, type: :model do
     end
 
     it ' creates a garden activity' do
-      binding.pry
-      my_activity = GardenActivity.new(activity_id: activity.id, garden_id: garden.id, notes: "blah blah", weather: "Hot", date_performed: Time.now)
-      binding.pry
+      my_activity = GardenActivity.new(activity_id: a_id, garden_id: g_id, notes: "blah blah", weather: "Hot", date_performed: Time.now)
+
       expect(my_activity).to be_valid
     end
   end

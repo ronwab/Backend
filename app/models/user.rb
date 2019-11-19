@@ -10,7 +10,7 @@ class User < ApplicationRecord
   after_create :signup_confirmation
 
   def signup_confirmation
-    Rails.logger.info('jhere')
+    Rails.logger.info('here')
     UserMailer.signup_confirmation(self).deliver
   end
 end

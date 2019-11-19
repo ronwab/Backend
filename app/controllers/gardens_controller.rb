@@ -3,6 +3,8 @@
 class GardensController < ApplicationController
   respond_to :json
 
+  # ensure user is logged in before they can edit, delete create, or update.
+  before_action :authenticate_user!, except: %i[show index]
   # GardenFertilizer.where(garden_id: 16)
 
   def fertilized_gardens

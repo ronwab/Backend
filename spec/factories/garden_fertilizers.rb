@@ -2,6 +2,8 @@
 
 FactoryGirl.define do
   factory :garden_fertilizer do
+    garden
+    fertilizer
     quantity_applied { Faker::Number.decimal(l_digits: 3, r_digits: 3) }
     fertilizer_id { Faker::Invoice.reference }
     garden_id { Faker::Invoice.reference }

@@ -4,7 +4,7 @@ class GardensController < ApplicationController
   respond_to :json
 
   # ensure user is logged in before they can edit, delete create, or update.
-  before_action :authenticate_user!, except: %i[show index]
+  # before_action :authenticate_user!, except: %i[show index]
   # GardenFertilizer.where(garden_id: 16)
 
   def fertilized_gardens
@@ -45,10 +45,18 @@ class GardensController < ApplicationController
 
   def destroy
     garden.destroy
-    render json: { "message": "Record with id #{garden} destroyed" }
+    render json: { "message": "The  #{garden_params[:plant_name]}  garden has been destroyed" }
     Rails.logger.info "Deleted record with #{garden}"
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in Delete method #{e.message}"
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def update
+    garden.update(garden_params)
+    render json: { "message": "The #{garden_params[:plant_name]} garden has been updated" }
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.info "Error rescued in update method #{e.message}"
     render json: { error: e.message }, status: :unprocessable_entity
   end
 

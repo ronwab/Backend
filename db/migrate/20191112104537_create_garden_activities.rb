@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGardenActivities < ActiveRecord::Migration[6.0]
   def change
     create_table :garden_activities do |t|

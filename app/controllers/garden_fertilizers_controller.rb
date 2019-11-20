@@ -11,30 +11,8 @@ class GardenFertilizersController < ApplicationController
     end
   end
 
-  # :fertilizer_amount,
-  # :fertilizer_id,
-  # :id
-  #
-  #  garden GET    /gardens/:id(.:format)                                                                   gardens#show
-  #
-  # def add_to_garden
-  #   garden = Garden.find(garden_id)
-  #   quantity = params[:quantity]
-  #   fertilizer.apply_to_garden(garden, quantity)
-  # end
-
-  # On garden show page, the user selects the quantity and fertilizer
-  # User hits submit
-  # Submit triggers a POST request to `def create` with the parameters the user entered in
-
   def create
-    # binding.pry
-    #  GardenFertilizer.create(quantity: amount, garden_id: garden.id, fertilizer_id: self.id)
     garden_fertilizer = GardenFertilizer.create!(application_params)
-
-    # fertilizer = garden_fertilizer.fertilizer
-    # garden_fertilizer.fertilizer.subtract_from_total(amount)
-
     respond_with(garden_fertilizer)
   rescue ActiveRecord::RecordInvalid => e
     handle_errors(e)
@@ -48,6 +26,13 @@ class GardenFertilizersController < ApplicationController
 
   def destroy
     applied_fertilizer.destroy
+  rescue ActiveRecord::RecordNotFound => e
+    handle_errors(e)
+  end
+
+  def update
+    applied_fertilizer.update(application_params)
+    render json: { message: "Activity for #{params[:garden_id]} has been updated" }
   rescue ActiveRecord::RecordNotFound => e
     handle_errors(e)
   end

@@ -11,6 +11,8 @@ class Garden < ApplicationRecord
   has_many :garden_activities
   has_many :activities, through: :garden_activities
 
+  has_many :harvests
+
   # belongs_to :user
 
   before_save :downcase_plant_name

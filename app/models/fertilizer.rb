@@ -6,5 +6,5 @@ class Fertilizer < ApplicationRecord
   has_many :garden_fertilizers
   has_many :gardens, through: :garden_fertilizers
 
-  before_save { self.fertilizer_name = fertilizer_name.downcase! }
+  # before_save { self.fertilizer_name = self.fertilizer_name.downcase! }
 end

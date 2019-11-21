@@ -12,9 +12,6 @@ class GardenFertilizer < ApplicationRecord
   private
 
   def check_fertilizer_quantity
-    # if fertilizer.quantity < quantity_applied
-    #   raise ArgumentError, "Applied Quantity of #{quantity_applied} cant be greater than available #{fertilizer.quantity} "
-    # end
     return unless fertilizer.quantity < quantity_applied
     raise ArgumentError, "Applied Quantity of #{quantity_applied} cant be greater than available #{fertilizer.quantity} "
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GardenActivitiesController < ApplicationController
   respond_to :json
 
@@ -24,7 +26,7 @@ class GardenActivitiesController < ApplicationController
 
   def destroy
     my_garden_activity.destroy
-    respond_with json: {message: " Record is destroyed"}
+    respond_with json: { message: ' Record is destroyed' }
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in destroy method #{e.message}"
     handle_errors(e)

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class CalcFertilizer
-  def self.peform(quantity_applied, fertilizer)
+  def self.perform(quantity_applied, fertilizer)
     myfertilizer = fertilizer.quantity
-
     fertilizer.quantity = myfertilizer - quantity_applied
-    fertilizer.save
+    fertilizer.save!
   end
 end

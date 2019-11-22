@@ -16,7 +16,6 @@ RSpec.describe Garden, type: :model do
       expect(garden).not_to be_valid
     end
     it 'should have a date' do
-      binding.pry
       garden = Garden.create(plant_name: 'chinese cabbag', date_planted: '', rows: 81, spacing: 38,
                              notes: 'Books are useless! I only ever read one book, To K...')
       expect(garden).not_to be_valid

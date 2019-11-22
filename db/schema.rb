@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_104537) do
+ActiveRecord::Schema.define(version: 2019_11_20_135806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(version: 2019_11_12_104537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "harvests", force: :cascade do |t|
+    t.date "date_harvested"
+    t.integer "quantity"
+    t.integer "harvest_number"
+    t.string "notes"
+    t.bigint "garden_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["garden_id"], name: "index_harvests_on_garden_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "address"
     t.float "latitude"
@@ -96,5 +107,6 @@ ActiveRecord::Schema.define(version: 2019_11_12_104537) do
   add_foreign_key "garden_activities", "gardens"
   add_foreign_key "garden_fertilizers", "fertilizers"
   add_foreign_key "garden_fertilizers", "gardens"
+  add_foreign_key "harvests", "gardens"
   add_foreign_key "posts", "users"
 end

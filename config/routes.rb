@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :tests, :posts, :locations, :garden_fertilizers, :garden_activities
+  resources :tests, :posts, :locations, :garden_fertilizers, :garden_activities, :harvests
 
   resources :gardens do
     resources :fertilizers

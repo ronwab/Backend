@@ -21,7 +21,7 @@ class GardensController < ApplicationController
   end
 
   def index
-    respond_with @garden = Garden.all
+    respond_with @garden = Garden.all.page(1)
     #
     # ****** Why does this fail ??  Fertilizer.find(fertilizer_id).gardens || Garden.all
     # gardens = Garden.all || Fertilizer.find(fertilizer_id).gardens

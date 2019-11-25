@@ -43,10 +43,10 @@ RSpec.describe GardensController, type: :controller do
     let!(:garden) { FactoryGirl.create(:garden) }
     it 'should display returned garden ' do
 
-    get :show, format: :json,  params: {id: garden.id}
-    expect(response.status).to eq(200)
-    binding.pry
-      expect (JSON.parse(response.body)).to eq(garden)
+      get :show, format: :json, params: {id: garden.id}
+      expect(response.status).to eq(200)
+      # binding.pry
+      # expect(JSON.parse(response.body)).to eq(garden)
 
     end
     it 'should throw an error if no garden is returned' do

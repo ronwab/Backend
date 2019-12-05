@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Harvest < ApplicationRecord
   belongs_to :garden
 

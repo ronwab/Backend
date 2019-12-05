@@ -11,26 +11,21 @@ class GardensController < ApplicationController
     params.fetch(:page_size, 1)
   end
 
-  def search_input
-    @search_results = Garden.search(params[:search]).order("created_at DESC")
-  end
-
   def pagination_size_and_page
     @garden = Garden.page(page).per(page_size)
   end
 
   def index
-    if params[:search]
-      search_input
-      if @search_results.blank?
-        render json: {message: "Record Not Found"}
-      else
-        respond_with(@search_results)
-      end
-    else
-      pagination_size_and_page
-      respond_with(@garden)
-    end
+    pagination_size_and_page
+    respond_with(@garden)
+  end
+
+  def gardens_all
+    respond_with(find_all_gardens)
+  end
+
+  def find_all_gardens
+    Garden.all
   end
 
   def create
@@ -80,7 +75,6 @@ class GardensController < ApplicationController
   def garden
     @garden ||= Garden.find(params[:id])
   end
-
 
   private
 

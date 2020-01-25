@@ -3,10 +3,31 @@
 class FertilizersController < ApplicationController
   respond_to :json
 
+  def search_fertilizer
+    if search_params[:search].present?
+      check_search_results
+    else
+      render json: { "message": ' Enter Fertilizer to search for' }
+    end
+  end
+
+  def check_search_results
+    @search_results = Fertilizer.where('fertilizer_name LIKE ?', "%#{search_params[:search].downcase}%")
+    if @search_results.present?
+      respond_with @search_results
+    else
+      render json: { "message": 'No results found Please enter another value' }, status: :Not_Found
+    end
+  end
+
   def index
-    # binding.pry
+    # returns all fertilizers
+    respond_with @all_fertilizers = Fertilizer.all
+  end
+
+  def fertilized_gardens
     # Display fertilizers based by gardens
-    respond_with @fertilizer = Garden.find(garden_id).fertilizers
+    respond_with @fertilizer = Fertilizer.find(fertilizer_params).fertilizers
   end
 
   def create
@@ -34,7 +55,7 @@ class FertilizersController < ApplicationController
 
   def destroy
     fertilizer.destroy
-    render json: { "message": "Record with id #{fertilizer} destroyed" }
+    render json: {"message": "Record with id #{fertilizer} destroyed"}
     Rails.logger.info "Deleted record with #{fertilizer}"
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in Delete method #{e.message}"
@@ -46,13 +67,17 @@ class FertilizersController < ApplicationController
   end
 
   def handle_errors(e)
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: {error: e.message}, status: :unprocessable_entity
   end
 
   private
 
   def garden_id
     params[:garden_id]
+  end
+
+  def search_params
+    params.permit(:search)
   end
 
   def fertilizer_params

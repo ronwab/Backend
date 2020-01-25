@@ -20,7 +20,7 @@ class Garden < ApplicationRecord
     self.plant_name = plant_name.downcase
   end
 
-  def self.search(search)
-    where('plant_name LIKE ?', "%#{search}%")
+  def self.search(search_params)
+    where('plant_name LIKE ?', "%#{search_params}%")
   end
 end

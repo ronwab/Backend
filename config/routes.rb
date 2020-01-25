@@ -16,9 +16,10 @@ Rails.application.routes.draw do
       get :gardens_all
     end
   end
-  get '/fertilizer/:id/gardens', to: 'gardens#fertilized_gardens'
+  get '/fertilizers/:id/gardens', to: 'gardens#fertilized_gardens'
   get '/garden/:id/fertilizers', to: 'gardens#applied_fertilizers'
-  # get '/gardens/all', to: 'gardens#all_garden'
+  get '/fertilizers_search', to: 'fertilizers#search_fertilizer'
+  get 'fertilized_gardens', to: 'fertilizers#gardens_with_fertilizer'
 
   root 'pages#home'
   devise_for :users

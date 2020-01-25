@@ -3,10 +3,33 @@
 class FertilizersController < ApplicationController
   respond_to :json
 
+  def search_fertilizer
+    # search defined in fertilizer model
+    @search_results = Fertilizer.search(search_params[:search].downcase)
+    if @search_results.present?
+      respond_with @search_results, status: 200
+    else
+      render json: { "message": 'No results found Please enter another value' }, status: 404
+    end
+  end
+
+  def gardens_with_fertilizer
+    @search_results = Fertilizer.search(search_params[:search].downcase).gardens
+    if @search_results.present?
+      respond_with @search_results, status: 200
+    else
+      render json: { "message": 'No results found Please enter another value' }, status: 404
+    end
+  end
+
   def index
-    # binding.pry
+    # returns all fertilizers
+    respond_with @all_fertilizers = Fertilizer.all
+  end
+
+  def fertilized_gardens
     # Display fertilizers based by gardens
-    respond_with @fertilizer = Garden.find(garden_id).fertilizers
+    respond_with @fertilizer = Fertilizer.find(fertilizer_params).fertilizers
   end
 
   def create
@@ -53,6 +76,10 @@ class FertilizersController < ApplicationController
 
   def garden_id
     params[:garden_id]
+  end
+
+  def search_params
+    params.permit(:search)
   end
 
   def fertilizer_params

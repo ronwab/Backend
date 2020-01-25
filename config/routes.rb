@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get '/fertilizers/:id/gardens', to: 'gardens#fertilized_gardens'
   get '/garden/:id/fertilizers', to: 'gardens#applied_fertilizers'
   get '/fertilizers_search', to: 'fertilizers#search_fertilizer'
+  get 'fertilized_gardens', to: 'fertilizers#gardens_with_fertilizer'
 
   root 'pages#home'
   devise_for :users

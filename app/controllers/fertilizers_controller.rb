@@ -4,11 +4,21 @@ class FertilizersController < ApplicationController
   respond_to :json
 
   def search_fertilizer
-    @search_results = Fertilizer.search(search_params[:search])
+    # search defined in fertilizer model
+    @search_results = Fertilizer.search(search_params[:search].downcase)
     if @search_results.present?
       respond_with @search_results, status: 200
     else
-      render json: {"message": 'No results found Please enter another value'}, status: 404
+      render json: { "message": 'No results found Please enter another value' }, status: 404
+    end
+  end
+
+  def gardens_with_fertilizer
+    @search_results = Fertilizer.search(search_params[:search].downcase).gardens
+    if @search_results.present?
+      respond_with @search_results, status: 200
+    else
+      render json: { "message": 'No results found Please enter another value' }, status: 404
     end
   end
 
@@ -47,7 +57,7 @@ class FertilizersController < ApplicationController
 
   def destroy
     fertilizer.destroy
-    render json: {"message": "Record with id #{fertilizer} destroyed"}
+    render json: { "message": "Record with id #{fertilizer} destroyed" }
     Rails.logger.info "Deleted record with #{fertilizer}"
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in Delete method #{e.message}"
@@ -59,7 +69,7 @@ class FertilizersController < ApplicationController
   end
 
   def handle_errors(e)
-    render json: {error: e.message}, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private

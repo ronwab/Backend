@@ -7,4 +7,8 @@ class Fertilizer < ApplicationRecord
   has_many :gardens, through: :garden_fertilizers
 
   # before_save { self.fertilizer_name = self.fertilizer_name.downcase! }
+
+  def self.search(search_params)
+  where('Fertilizer_name LIKE?', "%#{search_params}%" )
+  end
 end

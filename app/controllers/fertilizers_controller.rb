@@ -4,19 +4,11 @@ class FertilizersController < ApplicationController
   respond_to :json
 
   def search_fertilizer
-    if search_params[:search].present?
-      check_search_results
-    else
-      render json: { "message": ' Enter Fertilizer to search for' }
-    end
-  end
-
-  def check_search_results
-    @search_results = Fertilizer.where('fertilizer_name LIKE ?', "%#{search_params[:search].downcase}%")
+    @search_results = Fertilizer.search(search_params[:search])
     if @search_results.present?
-      respond_with @search_results
+      respond_with @search_results, status: 200
     else
-      render json: { "message": 'No results found Please enter another value' }, status: :Not_Found
+      render json: {"message": 'No results found Please enter another value'}, status: 404
     end
   end
 

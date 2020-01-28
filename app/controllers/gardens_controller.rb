@@ -33,6 +33,8 @@ class GardensController < ApplicationController
     respond_with(new_garden)
   rescue ActiveRecord::RecordInvalid => e
     render json: { error: e.message }, status: :unprocessable_entity
+  rescue ExistanceChecker::ExistanceError => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def show

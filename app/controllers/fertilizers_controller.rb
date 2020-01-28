@@ -37,6 +37,8 @@ class FertilizersController < ApplicationController
     respond_with(new_fertilizer)
   rescue ActiveRecord::RecordInvalid => e
     handle_errors(e)
+  rescue ExistanceChecker::ExistanceError => e
+    handle_errors(e)
   end
 
   def update
@@ -70,6 +72,10 @@ class FertilizersController < ApplicationController
 
   def handle_errors(e)
     render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def handle_myerror(f)
+    render json: { error: f.message }, status: :unprocessable_entity
   end
 
   private

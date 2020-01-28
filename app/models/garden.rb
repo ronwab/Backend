@@ -13,7 +13,7 @@ class Garden < ApplicationRecord
 
   has_many :harvests
 
-  # belongs_to :user
+  before_create :garden_exsistance_checker
 
   before_save :downcase_plant_name
   def downcase_plant_name
@@ -22,5 +22,9 @@ class Garden < ApplicationRecord
 
   def self.search(search_params)
     where('plant_name LIKE ?', "%#{search_params}%")
+  end
+
+  def garden_exsistance_checker
+    ExistanceChecker.perform(plant_name, Garden, 'plant_name')
   end
 end

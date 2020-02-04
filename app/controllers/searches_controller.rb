@@ -2,6 +2,7 @@
 
 class SearchesControllers < ApplicationController
   def search_input
+    binding.pry
     @search_results = Garden.search(params[:search]).order('created_at DESC')
   end
 

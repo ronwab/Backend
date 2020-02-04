@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
   end
   get '/fertilizers/:id/gardens', to: 'gardens#fertilized_gardens'
+  get 'gardens_search', to: 'gardens#search_gardens'
   get '/garden/:id/fertilizers', to: 'gardens#applied_fertilizers'
   get '/fertilizers_search', to: 'fertilizers#search_fertilizer'
   get 'fertilized_gardens', to: 'fertilizers#gardens_with_fertilizer'

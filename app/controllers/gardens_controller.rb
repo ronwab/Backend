@@ -3,6 +3,13 @@
 class GardensController < ApplicationController
   respond_to :json
 
+  def search_gardens
+    searched_garden = Garden.search_record(search_garden_params)
+    respond_with(searched_garden)
+  rescue SearchRecord::NoSearchResults => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   def page
     params.fetch(:page, 1)
   end
@@ -82,6 +89,10 @@ class GardensController < ApplicationController
 
   def fertilizer_id
     params[:fertilizer_id]
+  end
+
+  def search_garden_params
+    params[:search].downcase
   end
 
   def garden_params

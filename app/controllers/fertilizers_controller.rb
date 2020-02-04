@@ -34,7 +34,7 @@ class FertilizersController < ApplicationController
 
   def create
     new_fertilizer = Fertilizer.create!(fertilizer_params)
-    respond_with(new_fertilizer)
+    respond_with(new_fertilizer, status: :created)
   rescue ActiveRecord::RecordInvalid => e
     handle_errors(e)
   rescue ExistanceChecker::ExistanceError => e
@@ -70,6 +70,8 @@ class FertilizersController < ApplicationController
     @fertilizer ||= Fertilizer.find(params[:id])
   end
 
+  def generated_errors; end
+
   def handle_errors(e)
     render json: { error: e.message }, status: :unprocessable_entity
   end
@@ -85,7 +87,7 @@ class FertilizersController < ApplicationController
   end
 
   def search_params
-    params.permit(:search)
+    params[:fertilizer_name]
   end
 
   def fertilizer_params

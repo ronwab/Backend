@@ -7,7 +7,7 @@ class FertilizersController < ApplicationController
     # search defined in fertilizer model
     @search_results = Fertilizer.search(search_params[:search].downcase)
     if @search_results.present?
-      respond_with @search_results, status: 200
+      JSON.parse( @search_results.json , status: 200)
     else
       render json: { "message": 'No results found Please enter another value' }, status: 404
     end
@@ -24,7 +24,8 @@ class FertilizersController < ApplicationController
 
   def index
     # returns all fertilizers
-    respond_with @all_fertilizers = Fertilizer.all
+    @all_fertilizers = Fertilizer.all
+    respond_with(@all_fertilizers)
   end
 
   def fertilized_gardens
@@ -69,8 +70,6 @@ class FertilizersController < ApplicationController
   def fertilizer
     @fertilizer ||= Fertilizer.find(params[:id])
   end
-
-  def generated_errors; end
 
   def handle_errors(e)
     render json: { error: e.message }, status: :unprocessable_entity

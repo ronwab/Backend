@@ -5,9 +5,13 @@ class FertilizersController < ApplicationController
 
   def search_fertilizer
     # search defined in fertilizer model
-    @search_results = Fertilizer.search(search_params[:search].downcase)
+    # @search_results = Fertilizer.search(search_params[:search].downcase)
+    # binding.pry
+    @search_results = Fertilizer.search(search_params)
+
     if @search_results.present?
-      JSON.parse( @search_results.json , status: 200)
+      # binding.pry
+      respond_with(@search_results, status: 200)
     else
       render json: { "message": 'No results found Please enter another value' }, status: 404
     end
@@ -86,7 +90,7 @@ class FertilizersController < ApplicationController
   end
 
   def search_params
-    params[:fertilizer_name]
+    params[:fertilizer_name].downcase
   end
 
   def fertilizer_params

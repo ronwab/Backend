@@ -4,13 +4,9 @@ class FertilizersController < ApplicationController
   respond_to :json
 
   def search_fertilizer
-    # search defined in fertilizer model
-    # @search_results = Fertilizer.search(search_params[:search].downcase)
-    # binding.pry
     @search_results = Fertilizer.search(search_params)
 
     if @search_results.present?
-      # binding.pry
       respond_with(@search_results, status: 200)
     else
       render json: { "message": 'No results found Please enter another value' }, status: 404

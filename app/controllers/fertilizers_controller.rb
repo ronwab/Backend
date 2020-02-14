@@ -3,6 +3,15 @@
 class FertilizersController < ApplicationController
   respond_to :json
 
+  def pages
+    params.fetch( :pages, 1 )
+  end
+
+  def per_page
+    params.fetch(:per_page, 5)
+
+  end
+
   def search_fertilizer
     @search_results = Fertilizer.search(search_params)
 
@@ -22,9 +31,13 @@ class FertilizersController < ApplicationController
     end
   end
 
+  def pagination_page_and_size
+    @all_fertilizers = Fertilizer.page(pages).per(per_page)
+  end
+
   def index
     # returns all fertilizers
-    @all_fertilizers = Fertilizer.all
+    pagination_page_and_size
     respond_with(@all_fertilizers)
   end
 

@@ -43,12 +43,36 @@ RSpec.describe FertilizersController, type: :controller do
     it ' should show all fertilizers' do
       get :index, format: :json,
                   params: { page: 1, per_page: 5 }
-      binding.pry
       expect(response.status).to eq(200)
-      expect(response.body).to eq(5)
-
-      # binding.pry
+      expect(JSON.parse(response.body).count).to eq(5)
     end
+
+    it 'should error if per_page and per page is not a number' do
+
+      get :index, format: :json,
+          params: { page: "d", per_page: 'd' }
+
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to include("error" => "Please enter numeric values as parameters")
+    end
+
+    it 'should error if per_page not a number' do
+
+      get :index, format: :json,
+          params: { page: 3, per_page: 'd' }
+
+
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to include("error" => "Please enter numeric values as parameters")
+    end
+
+    it 'should error if page value not a number' do
+      get :index, format: :json,
+          params: { page: 'd', per_page: 3 }
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to include("error" => "Please enter numeric values as parameters")
+    end
+
   end
   describe 'create a fertilizer' do
     it 'should create  new fertilizer' do

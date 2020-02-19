@@ -8,7 +8,7 @@ class FertilizersController < ApplicationController
   end
 
   def per_page
-    params.fetch(:per_page, 5)
+    params.fetch(:page_size, 5)
   end
 
   def search_fertilizer
@@ -17,7 +17,7 @@ class FertilizersController < ApplicationController
     if @search_results.present?
       respond_with(@search_results, status: 200)
     else
-      render json: {"message": 'No results found Please enter another value'}, status: 404
+      render json: { "message": 'No results found Please enter another value' }, status: 404
     end
   end
 
@@ -26,26 +26,22 @@ class FertilizersController < ApplicationController
     if @search_results.present?
       respond_with @search_results, status: 200
     else
-      render json: {"message": 'No results found Please enter another value'}, status: 404
+      render json: { "message": 'No results found Please enter another value' }, status: 404
     end
   end
 
   def pagination_page_and_size
-
     NumericParamsChecker.perform(page, per_page)
 
     @all_fertilizers = Fertilizer.page(page).per(per_page)
-
-
   end
 
   def index
     pagination_page_and_size
 
     respond_with(@all_fertilizers)
-    # binding.pry
-    rescue NumericParamsChecker::NumericParamError => e
-      handle_errors(e)
+  rescue NumericParamsChecker::NumericParamError => e
+    handle_errors(e)
   end
 
   def fertilized_gardens
@@ -80,7 +76,7 @@ class FertilizersController < ApplicationController
 
   def destroy
     fertilizer.destroy
-    render json: {"message": "Record with id #{fertilizer} destroyed"}
+    render json: { "message": "Record with id #{fertilizer} destroyed" }
     Rails.logger.info "Deleted record with #{fertilizer}"
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in Delete method #{e.message}"
@@ -92,11 +88,11 @@ class FertilizersController < ApplicationController
   end
 
   def handle_errors(e)
-    render json: {error: e.message}, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def handle_myerror(f)
-    render json: {error: f.message}, status: :unprocessable_entity
+    render json: { error: f.message }, status: :unprocessable_entity
   end
 
   private

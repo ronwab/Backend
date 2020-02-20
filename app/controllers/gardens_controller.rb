@@ -7,7 +7,7 @@ class GardensController < ApplicationController
     searched_garden = Garden.search_record(search_garden_params)
     respond_with(searched_garden)
   rescue SearchRecord::NoSearchResults => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :not_found
   end
 
   def page

@@ -3,11 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe GardenActivitiesController, type: :controller do
-  let!(:garden_activity) { FactoryGirl.create(:garden_activity) }
-  describe 'basic controller functions' do
-    it ' should get index' do
-      get :index, format: :json
-      expect(response.status).to eq(200)
+  describe 'it returns all garden activities' do
+    it 'should return all activities' do
+      let!
     end
+  end
+
+  describe ' it shows only one record' do
+  end
+  describe ' it should create a new activity' do
+  end
+  describe 'it should delete one activity' do
   end
 end

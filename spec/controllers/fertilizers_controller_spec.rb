@@ -35,10 +35,40 @@ RSpec.describe FertilizersController, type: :controller do
     end
   end
   describe 'find all fertilizers' do
-    let!(:fertilizer) { FactoryGirl.create(:fertilizer) }
+    let!(:fertilizer1) { FactoryGirl.create(:fertilizer) }
+    let!(:fertilizer2) { FactoryGirl.create(:fertilizer) }
+    let!(:fertilizer3) { FactoryGirl.create(:fertilizer) }
+    let!(:fertilizer4) { FactoryGirl.create(:fertilizer) }
+    let!(:fertilizer5) { FactoryGirl.create(:fertilizer) }
     it ' should show all fertilizers' do
-      get :index, format: :json
+      get :index, format: :json,
+                  params: { page: 1, per_page: 5 }
+      # binding.pry
       expect(response.status).to eq(200)
+      expect(JSON.parse(response.body).count).to eq(5)
+    end
+
+    it 'should error if per_page and per page is not a number' do
+      get :index, format: :json,
+                  params: { page: 'd', per_page: 'd' }
+
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to include('error' => 'Please enter numeric values as parameters')
+    end
+
+    it 'should error if per_page not a number' do
+      get :index, format: :json,
+                  params: { page: 3, per_page: 'd' }
+
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to include('error' => 'Please enter numeric values as parameters')
+    end
+
+    it 'should error if page value not a number' do
+      get :index, format: :json,
+                  params: { page: 'd', per_page: 3 }
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to include('error' => 'Please enter numeric values as parameters')
     end
   end
   describe 'create a fertilizer' do

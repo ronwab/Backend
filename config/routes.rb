@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :tests, :posts, :locations, :garden_fertilizers, :garden_activities,
-            :harvests, :search
+            :harvests, :search , :contacts
 
   # resources :gardens do
   #   resources :fertilizers

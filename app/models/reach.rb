@@ -1,0 +1,2 @@
+class Reach < ApplicationRecord
+end

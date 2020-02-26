@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :tests, :posts, :locations, :garden_fertilizers, :garden_activities,
-            :harvests, :search , :contacts
+            :harvests, :search, :contacts
 
   # resources :gardens do
   #   resources :fertilizers
@@ -17,10 +17,10 @@ Rails.application.routes.draw do
     end
   end
   get '/fertilizers/:id/gardens', to: 'gardens#fertilized_gardens'
-  get 'gardens_search', to: 'gardens#search_gardens'
+  get '/gardens_search', to: 'gardens#search_gardens'
   get '/garden/:id/fertilizers', to: 'gardens#applied_fertilizers'
   get '/fertilizers_search', to: 'fertilizers#search_fertilizer'
-  get 'fertilized_gardens', to: 'fertilizers#gardens_with_fertilizer'
+  get '/fertilized_gardens', to: 'fertilizers#gardens_with_fertilizer'
 
   root 'pages#home'
   devise_for :users

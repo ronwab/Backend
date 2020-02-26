@@ -31,8 +31,9 @@ class FertilizersController < ApplicationController
   end
 
   def pagination_page_and_size
-    NumericParamsChecker.perform( params["page"], params["per_page"])
-    @all_fertilizers = Fertilizer.page( params["page"]).per(params["per_page"])
+    NumericParamsChecker.perform(params['page'], params['per_page'])
+    # binding.pry
+    @all_fertilizers = Fertilizer.page(params['page']).per(params['per_page'])
   end
 
   def index
@@ -99,6 +100,7 @@ class FertilizersController < ApplicationController
   def garden_id
     params[:garden_id]
   end
+
   # searh val is coming from client
   def search_params
     params[:search_val].downcase

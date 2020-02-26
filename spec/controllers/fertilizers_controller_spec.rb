@@ -14,7 +14,6 @@ RSpec.describe FertilizersController, type: :controller do
       expect(response.status).to eq(200)
     end
     it 'should return an error if fertilizer is not found' do
-
       get :search_fertilizer, params: { search_val: 'I Dont exist' }, format: :json
 
       expect(response_json).to eq(message: 'No results found Please enter another value')
@@ -42,12 +41,13 @@ RSpec.describe FertilizersController, type: :controller do
     let!(:fertilizer3) { FactoryGirl.create(:fertilizer) }
     let!(:fertilizer4) { FactoryGirl.create(:fertilizer) }
     let!(:fertilizer5) { FactoryGirl.create(:fertilizer) }
+    let!(:fertilizer6) { FactoryGirl.create(:fertilizer) }
     it ' should show all fertilizers' do
       get :index, format: :json,
-                  params: { page: 1, per_page: 5 }
-      # binding.pry
+                  params: { page: 1, per_page: 6 }
+
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body).count).to eq(5)
+      expect(JSON.parse(response.body).count).to eq(6)
     end
 
     it 'should error if per_page and per page is not a number' do
@@ -70,7 +70,7 @@ RSpec.describe FertilizersController, type: :controller do
       get :index, format: :json,
                   params: { page: 'd', per_page: 3 }
       expect(response.status).to eq(422)
-      expect(JSON.parse(response.body)["error"]).to include('Please enter numeric values as parameters')
+      expect(JSON.parse(response.body)['error']).to include('Please enter numeric values as parameters')
     end
   end
   describe 'create a fertilizer' do
@@ -92,7 +92,7 @@ RSpec.describe FertilizersController, type: :controller do
                          params: { id: fertilizer.id }
       end.to change { Fertilizer.count }.by(-1)
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)["message"]).to include("Record with id #{fert_id} destroyed")
+      expect(JSON.parse(response.body)['message']).to include("Record with id #{fert_id} destroyed")
     end
     it 'should error if fertilizer is not found' do
       delete :destroy, params: { id: 3_333_333 }

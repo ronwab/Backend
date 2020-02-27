@@ -9,21 +9,11 @@ class GardenActivitiesController < ApplicationController
     handle_errors(e)
   end
 
-  def show  #confirm why this is not working
-    # binding.pry
-    # my_garden_activity
-    respond_with(my_garden_activity, status:200)
-      rescue ActiveRecord::RecordNotFound =>e
-          Rails.logger.info "Error rescued in show method #{e.message}"
-    render json: {error: e.message, status:404}
-
-# if(!my_garden_activity)
-#   rescue ActiveRecord::RecordNotFound =>e
-#   Rails.logger.info "Error rescued in show method #{e.message}"
-#   render json: {error: e.message, status:404}
-# end
-#           respond_with(my_garden_activity, status:200)
-
+  def show
+    respond_with(my_garden_activity, status: 200)
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.info "Error rescued in show method #{e.message}"
+    render json: {error: e.message}, status: :not_found
   end
 
   def create
@@ -48,8 +38,11 @@ class GardenActivitiesController < ApplicationController
 
   private
 
-  def my_garden_activity
+  def garden_activity_present?
+    my_garden_activity.present?
+  end
 
+  def my_garden_activity
     @my_garden_activity ||= GardenActivity.find(params[:id])
   end
 

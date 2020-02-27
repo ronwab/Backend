@@ -10,27 +10,22 @@ RSpec.describe GardenActivitiesController, type: :controller do
   end
 
   describe ' Show method' do
-    let(:garden_activity){ FactoryGirl.create(:garden_activity)}
+    let(:garden_activity) { FactoryGirl.create(:garden_activity) }
 
     it 'should return one Garden Acvitity' do
-    get :show, format: :json,
-      params: {id: garden_activity.id}
+      get :show, format: :json,
+          params: {id: garden_activity.id}
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)["activity"]).to eq(garden_activity.activity)
     end
 
-    it 'should return error message when no activity is found' do  #confirm why this is failing
+    it 'should return error message when no activity is found' do
 
-     get :show, format: :json,
-         params: {id: 34234234}
-# binding.pry
-     expect(response.status).to eq(404)
+      get :show, format: :json,
+          params: {id: 34234234}
+      expect(response.status).to eq(404)
       expect(JSON.parse(response.body)['error']).to include("Couldn't find GardenActivity with 'id'=34234234")
-
-
-
     end
-
   end
   describe ' it should create a new activity' do
     let (:garden) { FactoryGirl.create(:garden) }

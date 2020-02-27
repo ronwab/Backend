@@ -9,11 +9,21 @@ class GardenActivitiesController < ApplicationController
     handle_errors(e)
   end
 
-  def show
-    respond_with my_garden_activity
-  rescue ActiveRecord::RecordNotFound => e
-    Rails.logger.info "Error rescued in show method #{e.message}"
-    handle_errors(e)
+  def show  #confirm why this is not working
+    # binding.pry
+    # my_garden_activity
+    respond_with(my_garden_activity, status:200)
+      rescue ActiveRecord::RecordNotFound =>e
+          Rails.logger.info "Error rescued in show method #{e.message}"
+    render json: {error: e.message, status:404}
+
+# if(!my_garden_activity)
+#   rescue ActiveRecord::RecordNotFound =>e
+#   Rails.logger.info "Error rescued in show method #{e.message}"
+#   render json: {error: e.message, status:404}
+# end
+#           respond_with(my_garden_activity, status:200)
+
   end
 
   def create
@@ -26,19 +36,20 @@ class GardenActivitiesController < ApplicationController
 
   def destroy
     my_garden_activity.destroy
-    respond_with json: { message: ' Record is destroyed' }
+    respond_with json: {message: ' Record is destroyed'}
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in destroy method #{e.message}"
     handle_errors(e)
   end
 
   def handle_errors(e)
-    render json: { error: e.message }, status: :unprocessable_entry
+    render json: {error: e.message}, status: :unprocessable_entry
   end
 
   private
 
   def my_garden_activity
+
     @my_garden_activity ||= GardenActivity.find(params[:id])
   end
 

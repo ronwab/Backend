@@ -43,6 +43,6 @@ class GardenActivitiesController < ApplicationController
   end
 
   def garden_activities_params
-    params.permit(:activity_id, :garden_id, :date_performed, :weather, :notes)
+    params.permit(:garden_id, :date_performed, :time, :activity, :weather, :notes)
   end
 end

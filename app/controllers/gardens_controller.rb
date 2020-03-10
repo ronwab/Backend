@@ -1,13 +1,24 @@
 # frozen_string_literal: true
+require 'httparty'
 
 class GardensController < ApplicationController
   respond_to :json
 
+  def my_data
+    response = HTTParty.get('https://jsonplaceholder.typicode.com/posts')
+    respond_with(response.body)
+
+  end
+  def perform_search
+    @searched_garden = Garden.search_record(search_garden_params)
+  end
+
   def search_gardens
-    searched_garden = Garden.search_record(search_garden_params)
-    respond_with(searched_garden)
+    perform_search
+    @searched_garden.present?
+    respond_with(@searched_garden, status: 200)
   rescue SearchRecord::NoSearchResults => e
-    render json: { error: e.message }, status: :not_found
+    render json: { "message": e.message }, status: 404
   end
 
   def page

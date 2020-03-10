@@ -9,7 +9,7 @@ class Garden < ApplicationRecord
   has_many :fertilizers, through: :garden_fertilizers
 
   has_many :garden_activities
-  has_many :activities, through: :garden_activities
+  # has_many :activities, through: :garden_activities
 
   has_many :harvests
 

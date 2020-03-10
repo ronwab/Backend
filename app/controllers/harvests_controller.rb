@@ -48,3 +48,5 @@ class HarvestsController < ApplicationController
     params.permit(:id, :date_harvested, :quantity, :harvest_number, :notes, :garden_id)
   end
 end
+
+

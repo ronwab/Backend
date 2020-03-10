@@ -22,7 +22,7 @@ class FertilizersController < ApplicationController
   end
 
   def gardens_with_fertilizer
-    @search_results = Fertilizer.search(search_params[:search].downcase).gardens
+    @search_results = Fertilizer.search(params[:search_params].downcase).gardens
     if @search_results.present?
       respond_with @search_results, status: 200
     else
@@ -31,9 +31,9 @@ class FertilizersController < ApplicationController
   end
 
   def pagination_page_and_size
-    NumericParamsChecker.perform(page, per_page)
-
-    @all_fertilizers = Fertilizer.page(page).per(per_page)
+    NumericParamsChecker.perform(params['page'], params['per_page'])
+    # binding.pry
+    @all_fertilizers = Fertilizer.page(params['page']).per(params['per_page'])
   end
 
   def index
@@ -76,7 +76,7 @@ class FertilizersController < ApplicationController
 
   def destroy
     fertilizer.destroy
-    render json: { "message": "Record with id #{fertilizer} destroyed" }
+    render json: { "message": "Record with id #{fertilizer_params[:id]} destroyed" }
     Rails.logger.info "Deleted record with #{fertilizer}"
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.info "Error rescued in Delete method #{e.message}"
@@ -101,8 +101,9 @@ class FertilizersController < ApplicationController
     params[:garden_id]
   end
 
+  # searh val is coming from client
   def search_params
-    params[:fertilizer_name].downcase
+    params[:search_val].downcase
   end
 
   def fertilizer_params

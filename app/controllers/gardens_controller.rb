@@ -1,8 +1,14 @@
 # frozen_string_literal: true
+require 'httparty'
 
 class GardensController < ApplicationController
   respond_to :json
 
+  def my_data
+    response = HTTParty.get('https://jsonplaceholder.typicode.com/posts')
+    respond_with(response.body)
+
+  end
   def perform_search
     @searched_garden = Garden.search_record(search_garden_params)
   end

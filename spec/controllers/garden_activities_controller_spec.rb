@@ -7,6 +7,16 @@ RSpec.describe GardenActivitiesController, type: :controller do
     it 'should return all activities' do
     end
   end
+  describe 'Performing search' do
+    let(:garden) {FactoryGirl.create(:garden)}
+    let(:garden_activity ) {FactoryGirl.create(:garden_activity , garden: garden)};
+    it " should return search results" do
+      get :search, format: :json,
+          params: { id:  garden_activity.id }
+
+
+    end
+  end
 
   describe ' Show method' do
     let(:garden_activity) { FactoryGirl.create(:garden_activity) }

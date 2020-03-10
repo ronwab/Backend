@@ -3,6 +3,12 @@
 class GardenActivitiesController < ApplicationController
   respond_to :json
 
+  def search
+    # binding.pry
+
+
+    respond_with json: { message: "SEARCH" , status: 200 }
+  end
   def index
     respond_with GardenActivity.all
   rescue ActiveRecord::RecordNotFound => e
@@ -38,6 +44,14 @@ class GardenActivitiesController < ApplicationController
 
   private
 
+  def activity_search
+    activity || GardenActivity.find_by()
+  end
+
+  def activity_search_params
+    params.permit(:activity )
+  end
+
   def garden_activity_present?
     my_garden_activity.present?
   end
@@ -47,6 +61,6 @@ class GardenActivitiesController < ApplicationController
   end
 
   def garden_activities_params
-    params.permit(:garden_id, :date_performed, :time, :activity, :weather, :notes)
+    params.permit(:garden_id, :date_performed, :time, :activity, :weather, :notes, :activity, :time)
   end
 end

@@ -41,6 +41,7 @@ class HarvestsController < ApplicationController
 
   def harvest
     @harvest ||= Harvest.find(params[:id])
+    
   end
 
   def harvest_params
